@@ -1,3 +1,4 @@
+require "byebug"
 # @RETURN Array<integer>
 def range(start, end_num)
     if end_num < start
@@ -84,4 +85,44 @@ def fibonacci_v1(n)
     end
 end
 
-p fibonacci_v1(30)
+# p fibonacci_v1(7)
+
+# iterative fibonacci
+
+def fibonacci_v2(n)
+    return [] if n == 0
+    return [1] if n == 1
+    result = [1, 1]
+    (2...n).each { result << result[-1] + result[-2]}
+    result    
+end
+
+# p fibonacci_v2(7)
+
+# p fibonacci_v1(5) == fibonacci_v2(5)
+
+def bsearch(search_space, target, offset=0)
+    # debugger
+    return 0 if search_space.length == 1 && search_space[0] == target
+    return nil if search_space.length <= 1
+    middle = search_space.length / 2  # could commonly be called "pivot" in search algorithms
+
+    return middle + offset if search_space[middle] == target
+    if target > search_space[middle]
+        return bsearch(search_space[(middle)..], target, middle + offset)
+        # middle = 2 [5]
+    else
+        return bsearch(search_space[0...middle], target)
+    end
+
+end
+
+p bsearch([1, 2, 3], 1) # => 0
+p bsearch([2, 3, 4, 5], 3) # => 1
+p bsearch([2, 4, 6, 8, 10], 6) # => 2
+p bsearch([1, 3, 4, 5, 9], 5) # => 3
+# [1,3]  [5,9]
+p bsearch([1, 2, 3, 4, 5, 6], 6) # => 5
+# 6 elements, returning index 2 instead of index 5 
+p bsearch([1, 2, 3, 4, 5, 6], 0) # => nil
+p bsearch([1, 2, 3, 4, 5, 7], 6) # => nil
