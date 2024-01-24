@@ -117,12 +117,34 @@ def bsearch(search_space, target, offset=0)
 
 end
 
-p bsearch([1, 2, 3], 1) # => 0
-p bsearch([2, 3, 4, 5], 3) # => 1
-p bsearch([2, 4, 6, 8, 10], 6) # => 2
-p bsearch([1, 3, 4, 5, 9], 5) # => 3
-# [1,3]  [5,9]
-p bsearch([1, 2, 3, 4, 5, 6], 6) # => 5
-# 6 elements, returning index 2 instead of index 5 
-p bsearch([1, 2, 3, 4, 5, 6], 0) # => nil
-p bsearch([1, 2, 3, 4, 5, 7], 6) # => nil
+# p bsearch([1, 2, 3], 1) # => 0
+# p bsearch([2, 3, 4, 5], 3) # => 1
+# p bsearch([2, 4, 6, 8, 10], 6) # => 2
+# p bsearch([1, 3, 4, 5, 9], 5) # => 3
+# # [1,3]  [5,9]
+# p bsearch([1, 2, 3, 4, 5, 6], 6) # => 5
+# # 6 elements, returning index 2 instead of index 5 
+# p bsearch([1, 2, 3, 4, 5, 6], 0) # => nil
+# p bsearch([1, 2, 3, 4, 5, 7], 6) # => nil
+
+
+def merge(arr1,arr2)
+    # debugger
+    result = []
+    while arr1.length > 0 || arr2.length > 0
+        first_ele = arr1[0]
+        second_ele = arr2[0]
+        comp_array = [first_ele, second_ele]
+        # 139 and 140 will jump to 133 if they execute
+        # gaurd clauses - prevents us from needing to check for nil at 141/143
+        next result << arr1.shift if second_ele == nil
+        next result << arr2.shift if first_ele == nil
+        if comp_array.none?{|v| v == nil} && first_ele < second_ele
+            result << arr1.shift
+        else
+            # Would still need to check for nil if 138 or 139 were missing
+            result << arr2.shift
+        end
+    end
+    result
+end
