@@ -58,6 +58,27 @@ class Array
         end
         result
     end
+
+end
+
+# array slice on a range of length = 0 returns an []
+def subsets(array)
+    result = []
+    return [[]] if array.length == 0
+    temp = array[-1]
+    # temp = [3]
+    # result = [] + subsets([1,2])
+    # subsets([1,2])
+    #  temp = [2]
+    #   result = [] + subsets([1])
+    #    subsets([1])
+    #       temp = [[1], []]
+    # 
+
+
+    result += subsets(array[0...-1])
+    result += result.map {|inner| inner + [temp] }
+
 end
 
 # robot_parts = [
@@ -148,3 +169,14 @@ def merge(arr1,arr2)
     end
     result
 end
+
+def merge_sort(array)
+    return [] if array.length == 0
+    return array if array.length == 1
+    pivot = array.length / 2
+    return merge(merge_sort(array[0...pivot]), merge_sort(array[pivot..]))
+end
+
+p merge_sort([38,27,43, 3, 9, 82, 10])
+p merge_sort([2])
+
